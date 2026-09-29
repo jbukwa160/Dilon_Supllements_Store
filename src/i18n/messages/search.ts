@@ -1,0 +1,48 @@
+import { defineMessages } from "../define";
+
+// Search box, suggestions, search results heading. Owner: B (results page texts may live in "listing").
+export default defineMessages({
+  bg: {
+    label: "Търсене",
+    placeholder: "Търси продукт, марка или код",
+    placeholderShort: "Търси протеин, витамини, марки…",
+    submit: "Търси",
+    clear: "Изчисти",
+    suggestions: "Предложения",
+    products: "Продукти",
+    categories: "Категории",
+    brands: "Марки",
+    brand: "Марка: {name}",
+    popular: "Популярни търсения",
+    /** Chips shown when the box is empty; each one is searched as it is. */
+    popularTerms: ["Протеин", "Креатин", "Магнезий", "Витамин D", "Омега 3", "Колаген", "Ашваганда", "Шейкър"],
+    recent: "Последно търсени",
+    clearRecent: "Изчисти историята",
+    none: "Няма намерени продукти за „{q}“.",
+    seeAllResults: "Виж всички {n} резултата",
+    seeAllResultsOne: "Виж резултата",
+    resultsFor: "Резултати за „{q}“",
+    resultsCount: { one: "{n} резултат", other: "{n} резултата" },
+  },
+  en: {
+    label: "Search",
+    placeholder: "Search for a product, brand or code",
+    placeholderShort: "Search protein, vitamins, brands…",
+    submit: "Search",
+    clear: "Clear",
+    suggestions: "Suggestions",
+    products: "Products",
+    categories: "Categories",
+    brands: "Brands",
+    brand: "Brand: {name}",
+    popular: "Popular searches",
+    popularTerms: ["Protein", "Creatine", "Magnesium", "Vitamin D", "Omega 3", "Collagen", "Ashwagandha", "Shaker"],
+    recent: "Recent searches",
+    clearRecent: "Clear history",
+    none: "No products found for “{q}”.",
+    seeAllResults: "See all {n} results",
+    seeAllResultsOne: "See the result",
+    resultsFor: "Results for “{q}”",
+    resultsCount: { one: "{n} result", other: "{n} results" },
+  },
+});

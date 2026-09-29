@@ -1,0 +1,46 @@
+import { defineMessages } from "../define";
+
+// Top bar, header icons, language switcher. Owner: B.
+export default defineMessages({
+  bg: {
+    uspLabel: "Предимства на магазина",
+    giftOver: "Подарък по избор при поръчка над {amount}",
+    returnDays: "{n} дни за връщане",
+    deliveryAndPayment: "Доставка и плащане",
+    contacts: "Контакти",
+    callUs: "Обади ни се: {phone}",
+    cart: "Количка",
+    cartWithCount: "Количка ({n})",
+    wishlist: "Любими",
+    account: "Профил",
+    login: "Вход",
+    search: "Търсене",
+    language: "Език",
+    /** Language names are written in their own language in both dictionaries. */
+    langName: { bg: "Български", en: "English" },
+    langShort: { bg: "БГ", en: "EN" },
+    switchTo: "English",
+    openMenu: "Отвори менюто",
+    closeMenu: "Затвори менюто",
+  },
+  en: {
+    uspLabel: "Why shop with us",
+    giftOver: "Free gift of your choice on orders over {amount}",
+    returnDays: "{n}-day returns",
+    deliveryAndPayment: "Delivery & payment",
+    contacts: "Contact",
+    callUs: "Call us: {phone}",
+    cart: "Cart",
+    cartWithCount: "Cart ({n})",
+    wishlist: "Wishlist",
+    account: "Account",
+    login: "Sign in",
+    search: "Search",
+    language: "Language",
+    langName: { bg: "Български", en: "English" },
+    langShort: { bg: "БГ", en: "EN" },
+    switchTo: "Български",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+  },
+});

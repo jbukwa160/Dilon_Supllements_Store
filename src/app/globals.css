@@ -1,0 +1,583 @@
+/*
+ * Dilon Nutrition — global styles (Tailwind 4).
+ *
+ * TWO LOOKS IN ONE FILE
+ * 1. Storefront ("Sport Orange", a GymBeam-style visual language): the tokens in @theme below — white pages,
+ *    near-black ink and bands, one sport orange (#cc3300 AA / #ff4410 fills) for prices, CTAs and the promo strip,
+ *    light-grey panels, Inter (400–900, Cyrillic) for everything, crisp 3–8 px corners, uppercase bold buttons.
+ * 2. Admin panel: must look exactly like /web's admin. It keeps /web's token NAMES (ink, canvas, line, muted,
+ *    brand, sun, sky, mint, grape, cream + -soft / -dark variants) so admin class strings are copied verbatim, and
+ *    the admin root layout puts `admin-theme` on <html> (next to the Nunito font variable class). `.admin-theme`
+ *    (at the end of this file) re-defines those variables with /web's values, resets the radius scale to
+ *    Tailwind's defaults and re-skins .btn / .btn-primary / .btn-ghost / .chip / .field exactly as /web had them.
+ *    This works because Tailwind 4 utilities read the variables at runtime (bg-ink → var(--color-ink)).
+ *    Consequence: brand / sun / sky / mint / grape / cream are ADMIN colours — never use them in the storefront.
+ *    Note: shadow-card / shadow-lift UTILITIES inline the storefront values; admin code uses
+ *    shadow-[var(--shadow-card)] / shadow-[var(--shadow-lift)] (as /web does), which follows .admin-theme.
+ *    `@theme static` = every variable below is always emitted, so var(--color-…) also works in inline styles.
+ *
+ * Fonts (next/font variables, set on <html> by the root layouts):
+ *   storefront [lang]/layout.tsx: --font-inter;  admin/layout.tsx: --font-nunito (+ --font-inter for shop previews).
+ */
+/* Class detection is limited to src/ (the folder above this file): the project isn't a git repository, so .gitignore
+ * is not applied and the automatic scan would also read data/ — the SQLite files (locked store.db-shm while the
+ * server runs) and the build output in .next/. */
+@import "tailwindcss" source("..");
+
+@theme static {
+  /* Storefront palette — "Sport Orange" (GymBeam-style visual language: white pages, black type and bands, one hot
+   * orange for prices, CTAs and the promo strip). Contrast checked: primary on white 5.2:1, on canvas 4.7:1;
+   * white on primary 5.2:1; ink on accent 5.5:1; muted on white 5.7:1 / on canvas 5.2:1. */
+  --color-canvas: #f4f4f4; /* light-grey panels, section bands, image tiles, chips (the page itself is white) */
+  --color-surface: #ffffff; /* page, cards, drawers, inputs */
+  --color-ink: #111111; /* text, headings, black bands (USP strip, footer), dark buttons */
+  --color-ink-soft: #3c3c3c; /* secondary headings / body on light backgrounds */
+  --color-muted: #666666; /* secondary text, meta, placeholders (AA on white and canvas) */
+  --color-line: #e3e3e3; /* hairlines, card borders, dividers */
+  --color-primary: #cc3300; /* sport orange (AA): main buttons, prices, links, active states, promo strip */
+  --color-primary-700: #a82a00; /* primary hover / pressed */
+  --color-primary-50: #fff1ea; /* tinted backgrounds (selected chip, info boxes) */
+  --color-accent: #ff4410; /* hot orange fill: progress bars, "НОВО", counters, icons on black — never text on white */
+  --color-accent-600: #e63a0a; /* accent hover and borders */
+  --color-sale: #c81e1e; /* sale price, −% badge */
+  --color-success: #1a7f37; /* "В наличност", "Безплатно" */
+  --color-warning: #b45309; /* "Последни бройки" */
+  --color-info: #1d5fa8; /* info notes, links in legal texts */
+
+  /* Admin-only colours (/web's values; the admin re-defines them in .admin-theme anyway). */
+  --color-brand: #f0503a;
+  --color-brand-dark: #d33a25;
+  --color-brand-soft: #ffe8e3;
+  --color-sun: #ffc93c;
+  --color-sun-soft: #fff4d1;
+  --color-sky: #2f9fe0;
+  --color-sky-soft: #e3f3fd;
+  --color-mint: #1fa463;
+  --color-mint-soft: #e2f6eb;
+  --color-grape: #7552f5;
+  --color-grape-soft: #efeaff;
+  --color-cream: #fff8ef;
+
+  /* Shape: crisp, nearly square corners (buttons, cards, badges); only the search field and round icon buttons are
+   * fully rounded. */
+  --radius-sm: 3px; /* badges, tags, small tiles */
+  --radius-md: 4px; /* buttons, inputs, selects, chips */
+  --radius-lg: 6px; /* product cards, panels, drawer boxes */
+  --radius-xl: 8px; /* hero, promo tiles, big bands */
+  --radius-pill: 9999px; /* search field, round icon buttons, progress tracks */
+  --radius-card: 6px;
+
+  /* Elevation is flat: 1px line borders; a soft shadow on hover; overlay for drawers / dialogs. */
+  --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-lift: 0 10px 24px -12px rgb(0 0 0 / 0.22);
+  --shadow-overlay: 0 24px 60px -18px rgb(0 0 0 / 0.38);
+
+  --animate-drawer-in: drawer-in 0.2s ease-out;
+  --animate-drawer-in-left: drawer-in-left 0.2s ease-out;
+  --animate-sheet-up: sheet-up 0.2s ease-out;
+  --animate-fade-in: fade-in 0.15s ease-out;
+  --animate-pulse-once: pulse-once 0.4s ease-out;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-inter), "Arial Black", system-ui, sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Anchors land below the sticky shop header (phone: logo row + search row; desktop: logo row + nav bar ≈ 8rem). */
+  scroll-padding-top: 8.5rem;
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Always-visible focus ring: orange on light backgrounds, white on dark / orange bands (add .on-dark to the band).
+ * In the base layer so an element's own radius (rounded-pill buttons, .btn, .chip) wins over the 4px default. */
+@layer base {
+  :focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--color-primary) 75%, transparent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .on-dark :focus-visible {
+    outline-color: #fff;
+  }
+}
+
+@layer components {
+  .container-shop {
+    width: 100%;
+    max-width: 1320px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 768px) {
+    .container-shop {
+      padding-inline: 1.5rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .container-shop {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Display headings: Inter ExtraBold, UPPERCASE, tight — short section titles (≤ 5 words). */
+  .h-display {
+    font-family: var(--font-inter), "Arial Black", system-ui, sans-serif;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  /* Long headings in sentence case (hero titles, promo band headlines, blog titles): Inter Black, tight. */
+  .h-title {
+    font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  /* Buttons: nearly square corners, bold uppercase label, 44px high by default (use h-12 for main CTAs). */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1.5px solid transparent;
+    font-size: 0.875rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+    transition:
+      background-color 0.15s ease-out,
+      border-color 0.15s ease-out,
+      color 0.15s ease-out,
+      transform 0.1s ease-out,
+      box-shadow 0.15s ease-out;
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+  /* Orange: the main action. */
+  .btn-primary {
+    background: var(--color-primary);
+    color: #fff;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--color-primary-700);
+  }
+  /* Energy CTA (hero, dark bands, "Поръчай" in cart and checkout): the same orange, a touch more padding. */
+  .btn-energy {
+    background: var(--color-primary);
+    color: #fff;
+  }
+  .btn-energy:hover:not(:disabled) {
+    background: var(--color-primary-700);
+  }
+  /* Black: secondary strong action ("Купи сега"-style). */
+  .btn-dark {
+    background: var(--color-ink);
+    color: #fff;
+  }
+  .btn-dark:hover:not(:disabled) {
+    background: #333;
+  }
+  /* Secondary: ink outline. */
+  .btn-outline {
+    background: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+  }
+  .btn-outline:hover:not(:disabled) {
+    background: var(--color-ink);
+    color: #fff;
+  }
+  /* Quiet: white with a hairline (icon buttons, "Отказ"). */
+  .btn-ghost {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    border-color: var(--color-line);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    border-color: var(--color-ink);
+  }
+
+  /* Filter chips, tags; selected = aria-pressed / aria-current / .chip-active. */
+  /* Filter chips, tags: grey squared tiles; selected = black. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border-radius: var(--radius-md);
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25;
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    border: 1.5px solid transparent;
+    transition:
+      border-color 0.15s ease-out,
+      background-color 0.15s ease-out;
+  }
+  .chip:hover {
+    border-color: var(--color-ink);
+  }
+  .chip[aria-pressed="true"],
+  .chip[aria-current="true"],
+  .chip[aria-current="page"],
+  .chip-active {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: #fff;
+  }
+
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Text inputs, selects, textareas. 16px text so iOS doesn't zoom in. */
+  .field {
+    width: 100%;
+    border-radius: var(--radius-md);
+    border: 1.5px solid #cfcfcf;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    padding: 0.7rem 0.95rem;
+    font-size: 1rem;
+    line-height: 1.4;
+    transition:
+      border-color 0.15s ease-out,
+      box-shadow 0.15s ease-out;
+  }
+  .field::placeholder {
+    color: var(--color-muted);
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-ink);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 22%, transparent);
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--color-sale);
+  }
+
+  /* Square-cornered badges on product cards. */
+  .badge-sale,
+  .badge-new {
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--radius-sm);
+    padding: 0.2rem 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+  .badge-sale {
+    background: var(--color-sale);
+    color: #fff;
+  }
+  .badge-new {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  /* 1–2 key words of a headline in the brand orange (the class name is historical). On dark / coloured slides the
+   * slide sets its own colour for the highlight. */
+  .mark-volt {
+    color: var(--color-primary);
+    padding-inline: 0.02em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* Horizontal product shelves (snap-scroll on phones, 6 per row on desktop). */
+  .scroll-row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(170px, 1fr);
+    gap: 0.75rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
+  }
+  .scroll-row > * {
+    scroll-snap-align: start;
+  }
+  @media (min-width: 768px) {
+    .scroll-row {
+      grid-auto-columns: minmax(210px, 1fr);
+      gap: 1rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .scroll-row {
+      grid-auto-columns: calc((100% - 5 * 1rem) / 6);
+    }
+  }
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes drawer-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* A reached gift / free-shipping milestone: one small pulse, no confetti. */
+@keyframes pulse-once {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------------------------------------------------
+ * ADMIN THEME — the look of /web's admin panel (see the note at the top). Values copied from /web globals.css.
+ * ------------------------------------------------------------------------------------------------------------ */
+.admin-theme {
+  --color-brand: #f0503a;
+  --color-brand-dark: #d33a25;
+  --color-brand-soft: #ffe8e3;
+  --color-sun: #ffc93c;
+  --color-sun-soft: #fff4d1;
+  --color-sky: #2f9fe0;
+  --color-sky-soft: #e3f3fd;
+  --color-mint: #1fa463;
+  --color-mint-soft: #e2f6eb;
+  --color-grape: #7552f5;
+  --color-grape-soft: #efeaff;
+  --color-ink: #1d2340;
+  --color-ink-soft: #3b4163;
+  --color-muted: #6b7093;
+  --color-line: #ebe7f1;
+  --color-cream: #fff8ef;
+  --color-canvas: #fbfaf8;
+  --color-surface: #ffffff;
+
+  /* Tailwind's default radius scale (the storefront enlarges it). */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-card: 1.25rem;
+
+  --shadow-card: 0 1px 2px rgb(29 35 64 / 0.04), 0 4px 16px rgb(29 35 64 / 0.06);
+  --shadow-lift: 0 8px 28px rgb(29 35 64 / 0.12);
+
+  scroll-behavior: smooth;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+.admin-theme,
+.admin-theme body {
+  font-family: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.5;
+}
+.admin-theme :focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-sky) 70%, transparent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@layer components {
+  .admin-theme .btn {
+    min-height: 0;
+    padding-inline: 0;
+    border: 0;
+    border-radius: 999px;
+    font-size: inherit;
+    font-weight: 800;
+    letter-spacing: normal;
+    text-transform: none;
+    line-height: inherit;
+    opacity: 1;
+    transition:
+      background-color 0.15s,
+      color 0.15s,
+      transform 0.1s,
+      box-shadow 0.15s;
+  }
+  .admin-theme .btn:active {
+    transform: translateY(1px);
+  }
+  .admin-theme .btn:disabled {
+    opacity: 1;
+  }
+  .admin-theme .btn-primary {
+    background: var(--color-brand);
+    color: white;
+    box-shadow: 0 4px 0 var(--color-brand-dark);
+  }
+  .admin-theme .btn-primary:hover {
+    background: var(--color-brand-dark);
+  }
+  .admin-theme .btn-primary:disabled {
+    background: #c9c7d3;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+  .admin-theme .btn-ghost {
+    background: white;
+    color: var(--color-ink);
+    border: 2px solid var(--color-line);
+  }
+  .admin-theme .btn-ghost:hover {
+    border-color: var(--color-ink);
+  }
+
+  .admin-theme .chip {
+    gap: 0.375rem;
+    border-radius: 999px;
+    padding: 0.375rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: inherit;
+    background: white;
+    color: inherit;
+    border: 1.5px solid var(--color-line);
+    transition: border-color 0.15s;
+  }
+  .admin-theme .chip:hover {
+    border-color: var(--color-ink);
+  }
+
+  .admin-theme .field {
+    border-radius: 0.875rem;
+    border: 2px solid var(--color-line);
+    background: white;
+    color: inherit;
+    padding: 0.7rem 0.95rem;
+    font-size: 1rem;
+    line-height: inherit;
+    box-shadow: none;
+    transition: border-color 0.15s;
+  }
+  .admin-theme .field:focus {
+    outline: none;
+    border-color: var(--color-sky);
+    box-shadow: none;
+  }
+  .admin-theme .field::placeholder {
+    color: color-mix(in oklab, currentcolor 50%, transparent);
+  }
+}
+
+/* Storefront components shown as live previews inside the admin (hero banners, promo cards, menu): wrap them in
+ * `shop-theme` to get the shop's colours, radii and fonts back (the admin layout loads Inter without preloading,
+ * only for these previews). */
+.admin-theme .shop-theme {
+  --color-ink: #111111;
+  --color-ink-soft: #3c3c3c;
+  --color-muted: #666666;
+  --color-line: #e3e3e3;
+  --color-canvas: #f4f4f4;
+  --color-surface: #ffffff;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-card: 6px;
+  --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-lift: 0 10px 24px -12px rgb(0 0 0 / 0.22);
+  color: var(--color-ink);
+  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+}
+@layer components {
+  /* …and the shop's buttons instead of the admin re-skin above. */
+  .admin-theme .shop-theme .btn {
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  .admin-theme .shop-theme .btn-primary {
+    background: var(--color-primary);
+    color: #fff;
+    box-shadow: none;
+  }
+  .admin-theme .shop-theme .btn-primary:hover {
+    background: var(--color-primary-700);
+  }
+  .admin-theme .shop-theme .btn-outline {
+    border-color: var(--color-ink);
+  }
+  .admin-theme .shop-theme .btn-ghost {
+    background: var(--color-surface);
+    border-color: var(--color-line);
+  }
+}

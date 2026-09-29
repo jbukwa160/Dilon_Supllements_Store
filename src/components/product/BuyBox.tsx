@@ -1,0 +1,56 @@
+"use client";
+
+import { useState } from "react";
+import { ShoppingBag } from "lucide-react";
+import { useDict } from "@/i18n/client";
+import type { CartSnapshot } from "@/lib/catalog-types";
+import { MAX_QTY, useCart } from "@/lib/store";
+import { QtyStepper } from "@/components/ui/QtyStepper";
+import { WishlistButton } from "@/components/cart/WishlistButton";
+
+/**
+ * Product page purchase row: quantity, "Добави в количката" (adds the chosen quantity and opens the cart drawer)
+ * and the wishlist heart. `canBuy` = in stock, or out-of-stock orders allowed in Настройки. Remount with a `key`
+ * per variant so the quantity starts at 1 again.
+ */
+export function BuyBox({ snapshot, canBuy, id }: { snapshot: CartSnapshot; canBuy: boolean; id?: string }) {
+  const t = useDict().product;
+  const { add } = useCart();
+  const [qty, setQty] = useState(1);
+  const [added, setAdded] = useState(false);
+  const max = snapshot.stock > 0 ? Math.min(snapshot.stock, MAX_QTY) : MAX_QTY;
+
+  return (
+    <div id={id} className="flex flex-wrap items-center gap-3">
+      <QtyStepper value={qty} onChange={setQty} max={max} disabled={!canBuy} label={t.qty} className="shrink-0" />
+      <button
+        type="button"
+        disabled={!canBuy}
+        onClick={() => {
+          add(snapshot, qty);
+          setAdded(true);
+          window.setTimeout(() => setAdded(false), 2500);
+        }}
+        className="btn btn-primary h-12 min-w-0 flex-1 px-4 text-[0.9rem] tracking-[0.02em] max-sm:order-last max-sm:basis-full"
+      >
+        <ShoppingBag className="h-5 w-5 shrink-0" aria-hidden />
+        {canBuy ? (
+          <>
+            {/* Phones: the button gets its own full-width row under quantity + heart, so the full label fits. In the
+                two-column layout (md–xl, 768–1279 px) the column is narrow: the short label keeps one row. */}
+            <span className="hidden truncate md:inline xl:hidden">{t.addShort}</span>
+            <span className="truncate md:hidden xl:inline">{t.addToCart}</span>
+          </>
+        ) : (
+          t.outOfStock
+        )}
+      </button>
+      <div className="grid h-12 w-12 shrink-0 place-items-center rounded-[var(--radius-md)] border-[1.5px] border-[#cfcfcf] bg-surface max-sm:ml-auto">
+        <WishlistButton snapshot={snapshot} variant="icon" />
+      </div>
+      <p className="sr-only" aria-live="polite">
+        {added ? t.added : ""}
+      </p>
+    </div>
+  );
+}
