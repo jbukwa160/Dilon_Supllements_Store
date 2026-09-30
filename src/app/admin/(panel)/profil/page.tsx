@@ -37,7 +37,7 @@ export default async function ProfileAdminPage() {
   return (
     <>
       <PageHeader title="Профил и парола" description="Сменете паролата си и вижте от кои устройства сте влезли в админ панела." />
-      <div className="grid items-start gap-5 lg:grid-cols-[1fr_360px]">
+      <div className="grid items-start gap-5 grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_360px]">
         <PasswordForm />
         <div className="space-y-5">
           <section className="rounded-3xl border border-line bg-white p-6">
@@ -89,7 +89,7 @@ export default async function ProfileAdminPage() {
             {sessions.length > shown.length ? <p className="text-sm text-muted">…и още {sessions.length - shown.length}</p> : null}
             {others ? (
               <form action={endOtherSessionsAction} className="mt-3">
-                <button type="submit" className="btn btn-ghost h-11 px-4 text-sm">
+                <button type="submit" className="btn btn-ghost h-auto min-h-11 max-w-full whitespace-normal px-4 py-2 text-sm">
                   <LogOut className="h-4 w-4" /> Изход от другите устройства ({others})
                 </button>
               </form>

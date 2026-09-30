@@ -94,10 +94,10 @@ export function NewsletterForm({ tone = "light", className }: { tone?: "light" |
           {t.submit}
         </button>
       </div>
-      <p id={`${uid}-error`} role="alert" className={clsx("mt-2 px-4 text-sm font-semibold", dark ? "text-[#ff9aa6]" : "text-sale", !error && "hidden")}>
+      <p id={`${uid}-error`} role="alert" className={clsx("mt-2 text-sm font-semibold", dark ? "w-fit rounded-[var(--radius-sm)] bg-ink px-3 py-1.5 text-white" : "px-4 text-sale", !error && "hidden")}>
         {error}
       </p>
-      <p id={`${uid}-consent`} className={clsx("mt-2 px-4 text-xs leading-relaxed", dark ? "text-canvas/65" : "text-muted")}>
+      <p id={`${uid}-consent`} className={clsx("mt-2 px-4 text-xs leading-relaxed", dark ? "text-white" : "text-muted")}>
         {t.consent}{" "}
         <Link href={localizeHref("/poveritelnost", lang)} className={clsx("underline underline-offset-2", dark ? "hover:text-white" : "hover:text-ink")}>
           {t.privacyLink}

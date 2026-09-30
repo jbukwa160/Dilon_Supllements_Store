@@ -70,7 +70,7 @@ export function VariantPanel({
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-4">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
         <Field label="Вкус" group hint="Напр. „Шоколад“. Празно, ако продуктът няма вкусове." error={errors.flavour}>
           <L10nInput label="Вкус" value={{ bg: value.flavour, en: value.flavourEn }} onChange={(v) => onChange({ flavour: v.bg, flavourEn: v.en })} maxLength={80} />
         </Field>
@@ -165,15 +165,15 @@ export function VariantPanel({
 
       <div className="flex flex-wrap gap-2">
         {value.groupKey !== "" && (inFamily || familyMode === "manual") ? (
-          <button type="button" onClick={() => onChange({ groupKey: "" })} className="btn btn-ghost h-10 px-4 text-sm">
+          <button type="button" onClick={() => onChange({ groupKey: "" })} className="btn btn-ghost min-h-10 max-w-full whitespace-normal px-4 py-2 text-left text-sm">
             <Split className="h-4 w-4" /> Отдели като самостоятелен продукт
           </button>
         ) : null}
-        <button type="button" onClick={() => setSearching((v) => !v)} className={clsx("btn h-10 px-4 text-sm", searching ? "bg-ink text-white" : "btn-ghost")} aria-expanded={searching}>
+        <button type="button" onClick={() => setSearching((v) => !v)} className={clsx("btn min-h-10 max-w-full whitespace-normal px-4 py-2 text-left text-sm", searching ? "bg-ink text-white" : "btn-ghost")} aria-expanded={searching}>
           <Users className="h-4 w-4" /> Присъедини към друго семейство
         </button>
         {value.groupKey !== null && (savedGroupKey !== null || changed) ? (
-          <button type="button" onClick={() => onChange({ groupKey: null })} className="btn btn-ghost h-10 px-4 text-sm">
+          <button type="button" onClick={() => onChange({ groupKey: null })} className="btn btn-ghost min-h-10 max-w-full whitespace-normal px-4 py-2 text-left text-sm">
             <RotateCcw className="h-4 w-4" /> Автоматично групиране
           </button>
         ) : null}

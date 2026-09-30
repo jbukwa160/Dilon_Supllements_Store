@@ -18,7 +18,7 @@ export function MobileFilters({ active, total, children }: { active: number; tot
   const close = () => setOpen(false);
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} aria-haspopup="dialog" className="btn btn-ghost h-10 min-h-0 px-4 text-[0.9rem] lg:hidden">
+      <button type="button" onClick={() => setOpen(true)} aria-haspopup="dialog" className="btn btn-outline h-11 min-h-0 w-full px-4 text-[0.9rem] hover:bg-canvas hover:text-ink sm:w-auto lg:hidden">
         <SlidersHorizontal className="h-4 w-4" aria-hidden />
         {active ? fmt(t.filters.withCount, { n: active }) : t.filters.title}
       </button>

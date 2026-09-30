@@ -15,6 +15,7 @@ import { formatPrice } from "@/lib/format";
 import { Card, DateTimeInput, Field, L10nInput, TextInput, Toggle, useUnsavedWarning } from "./ui";
 import { BrandPicker, CategorySelect, PercentInput, percentValue } from "./PriceTools";
 import { ProductSearch } from "./ProductSearch";
+import { ScrollArea } from "@/components/admin/ScrollArea";
 
 type Draft = Omit<PromotionInput, "percent"> & { percent: string; products: PromoProduct[] };
 
@@ -210,7 +211,7 @@ function PreviewBox({ preview, draft }: { preview: PromotionPreview; draft: Draf
         </p>
       )}
       {preview.samples.length ? (
-        <div className="mt-3 overflow-x-auto rounded-xl border border-line bg-white">
+        <ScrollArea className="rounded-xl border border-line bg-white" wrapperClassName="mt-3">
           <table className="w-full min-w-[520px] text-left text-sm">
             <thead className="bg-canvas text-xs font-extrabold uppercase text-muted">
               <tr>
@@ -235,7 +236,7 @@ function PreviewBox({ preview, draft }: { preview: PromotionPreview; draft: Draf
             </tbody>
           </table>
           {preview.willChange > preview.samples.length ? <p className="px-3 py-2 text-xs text-muted">…и още {preview.willChange - preview.samples.length}</p> : null}
-        </div>
+        </ScrollArea>
       ) : null}
       {range ? (
         <p className="mt-3 text-sm font-bold">
@@ -334,7 +335,7 @@ function PromotionForm({
       }
     >
       <div className="space-y-5">
-        <div className="grid gap-4 md:grid-cols-[1fr_auto]">
+        <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto]">
           <Field label="Име на промоцията" hint="Вижда се само в админ панела, напр. „Black Friday 2026“ или „-15% на протеините“." error={err("name")}>
             <TextInput value={draft.name} onChange={(e) => set({ name: e.target.value })} maxLength={80} invalid={!!err("name")} placeholder="напр. Black Friday 2026" />
           </Field>
@@ -394,7 +395,7 @@ function PromotionForm({
         ) : null}
 
         <div className="flex flex-wrap gap-2 border-t border-line pt-5">
-          <button type="button" onClick={check} disabled={pending} className="btn btn-ghost h-12 px-6">
+          <button type="button" onClick={check} disabled={pending} className="btn btn-ghost h-auto min-h-12 max-w-full whitespace-normal px-6 py-2">
             {pending && !preview ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null} Провери какво ще се промени
           </button>
           <button type="button" onClick={save} disabled={pending} className="btn btn-primary h-12 px-7">

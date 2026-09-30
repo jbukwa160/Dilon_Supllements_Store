@@ -344,6 +344,39 @@ body {
       grid-auto-columns: calc((100% - 5 * 1rem) / 6);
     }
   }
+
+  /* The home page's tabbed shelves: always one swipeable row — 2 cards + a peek of the third on phones, 3 on
+   * tablets, 4 on small laptops, 5 from 1280 px (arrow buttons scroll it from md). */
+  .shelf-row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 44%;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.75rem;
+    scrollbar-width: thin;
+  }
+  .shelf-row > * {
+    scroll-snap-align: start;
+  }
+  @media (min-width: 640px) {
+    .shelf-row {
+      grid-auto-columns: calc((100% - 2 * 1rem) / 3);
+      gap: 1rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .shelf-row {
+      grid-auto-columns: calc((100% - 3 * 1.25rem) / 4);
+      gap: 1.25rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .shelf-row {
+      grid-auto-columns: calc((100% - 4 * 1.25rem) / 5);
+    }
+  }
 }
 
 @keyframes drawer-in {

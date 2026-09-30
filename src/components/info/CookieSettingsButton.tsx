@@ -9,7 +9,7 @@ export function CookieSettingsButton() {
   const { openSettings } = useConsent();
   const t = useDict().info.cookieSettings;
   return (
-    <button type="button" onClick={() => openSettings()} className="btn btn-primary">
+    <button type="button" onClick={() => openSettings()} className="btn btn-primary h-auto max-w-full whitespace-normal py-2">
       <Cookie className="h-5 w-5" aria-hidden />
       {t.button}
     </button>

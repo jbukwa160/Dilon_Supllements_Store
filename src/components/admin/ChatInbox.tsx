@@ -169,7 +169,7 @@ export function ChatInbox({ initial, initialSettings, initialId }: { initial: Da
 
       {showSettings ? <ChatSettingsCard initial={initialSettings} onClose={() => setShowSettings(false)} /> : null}
 
-      <div className="grid overflow-hidden rounded-3xl border border-line bg-white lg:h-[calc(100vh-15rem)] lg:min-h-[540px] lg:grid-cols-[320px_1fr]">
+      <div className="grid grid-cols-[minmax(0,1fr)] overflow-hidden rounded-3xl border border-line bg-white lg:h-[calc(100vh-15rem)] lg:min-h-[540px] lg:grid-cols-[320px_minmax(0,1fr)]">
         {/* conversation list */}
         <div className={clsx("flex min-h-0 flex-col border-line lg:border-r", selected && "max-lg:hidden")}>
           <div className="flex gap-1 border-b border-line p-2" role="tablist" aria-label="Филтър">

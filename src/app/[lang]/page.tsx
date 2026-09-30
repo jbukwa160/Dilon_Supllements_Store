@@ -19,7 +19,8 @@ import { PromoCards } from "@/components/home/PromoCards";
 import { BrandsStrip, CategoryTiles, GiftTiersBlock, GoalTiles, NewsletterBand, TrustStrip } from "@/components/home/sections";
 import { formatAmount } from "@/components/layout/format-amount";
 import { giftFromAmount, navCategories } from "@/components/layout/nav-data";
-import { ProductShelf } from "@/components/product/ProductGrid";
+import { ProductCard } from "@/components/product/ProductCard";
+import { ShelfTabs } from "@/components/home/ShelfTabs";
 
 export const revalidate = 300;
 
@@ -89,7 +90,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
 
   const slides = home.slides.filter((x) => showable(x, lang));
   const needsCollage = slides.some((x) => x.layout === "text-image" && !loc(x.image, lang));
-  const collage = needsCollage ? getHeroProducts(lang, 4).map((p) => ({ id: p.id, slug: p.slug, name: p.name, image: p.image })) : [];
+  const collage = needsCollage ? getHeroProducts(lang, 9).map((p) => ({ id: p.id, slug: p.slug, name: p.name, image: p.image })) : [];
   const promos = home.promos.filter((p) => p.enabled && loc(p.title, lang));
   const autoImage = Object.fromEntries(promos.map((p) => [p.id, p.image ? null : imageForHref(p.href)]));
   const firstIsH1 = slides[0]?.layout === "text-image";
@@ -113,7 +114,8 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       )}
 
       {slides.length ? (
-        <div className="container-shop pt-4 md:pt-6">
+        // Full-bleed banner band (GymBeam): no side gutters, the slide aligns its text to the page container itself.
+        <div>
           <HeroCarousel
             slides={slides}
             productCount={productCount}
@@ -125,28 +127,40 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         </div>
       ) : null}
 
-      {/* GymBeam-style: the black promise band sits right under the hero, the promo tiles follow. */}
+      {/* GymBeam-style: the black promise band sits right under the hero band. */}
       {on.trust ? (
         <TrustStrip lang={lang} giftFrom={giftFrom} freeOver={s.shipping.freeOver} freeScope={s.shipping.freeScope} returnDays={s.returnDays} deliveryDays={loc(s.deliveryDays, lang)} />
       ) : null}
 
+      {/* XXL: the category tiles right under the hero band, then the products (GymBeam). */}
+      <CategoryTiles lang={lang} categories={categories} />
+      {/* One tabbed shelf (XXL / fitness1): bestsellers, hot deals, new in — a tab only when its section is on and has products. */}
+      <ShelfTabs
+        title={dict.home.shelves}
+        tabs={[
+          { key: "bestsellers", label: dict.home.bestsellers.title, href: "/produkti", products: bestsellers },
+          { key: "sale", label: dict.home.sale.title, href: "/promotsii", products: sale },
+          { key: "fresh", label: dict.home.fresh.title, href: "/novi", products: fresh },
+        ]
+          .filter((t) => t.products.length)
+          .map(({ products, ...t }) => ({
+            ...t,
+            children: products.map((p) => (
+              <li key={p.id} className="min-w-0">
+                <ProductCard product={p} lang={lang} />
+              </li>
+            )),
+          }))}
+      />
+
       {promos.length ? (
-        <div className="container-shop mt-6 md:mt-8">
+        <div className="container-shop py-2 md:py-4">
           <PromoCards promos={promos} lang={lang} autoImage={autoImage} />
         </div>
       ) : null}
 
       <GoalTiles lang={lang} goals={goals} />
-      <CategoryTiles lang={lang} categories={categories} />
       <GiftTiersBlock lang={lang} tiers={tiers} single={getGiftTiers().mode === "single"} />
-
-      {sale.length ? (
-        <div className="bg-canvas">
-          <ProductShelf title={dict.home.sale.title} subtitle={dict.home.sale.subtitle} href="/promotsii" products={sale} lang={lang} />
-        </div>
-      ) : null}
-      <ProductShelf title={dict.home.bestsellers.title} subtitle={dict.home.bestsellers.subtitle} href="/produkti" products={bestsellers} lang={lang} />
-      <ProductShelf title={dict.home.fresh.title} subtitle={dict.home.fresh.subtitle} href="/novi" products={fresh} lang={lang} />
 
       <BrandsStrip lang={lang} brands={brands} total={allBrands.length} />
       {on.blog ? <LatestPosts lang={lang} /> : null}

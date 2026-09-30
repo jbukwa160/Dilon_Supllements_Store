@@ -76,7 +76,7 @@ export function TrustStrip({
   if (items.length < 4) items.push({ icon: MessageCircle, title: t.support, text: t.supportText });
 
   return (
-    <section aria-label={t.label} className="on-dark mt-4 bg-ink text-white md:mt-6">
+    <section aria-label={t.label} className="on-dark bg-ink text-white">
       <ul className="container-shop grid grid-cols-2 gap-x-4 gap-y-4 py-4 md:py-5 lg:grid-cols-4 lg:gap-x-8">
         {items.map(({ icon: Icon, title, text }) => (
           <li key={title} className="flex min-w-0 items-start gap-2.5 md:items-center md:gap-3">
@@ -112,7 +112,7 @@ export function GoalTiles({ lang, goals }: { lang: Lang; goals: GoalInfo[] }) {
                   <CategoryIcon icon={g.icon} className="h-5 w-5" />
                 </span>
                 {g.image ? (
-                  <span className="absolute inset-[10%] left-[22%] block transition duration-300 group-hover:scale-105" aria-hidden>
+                  <span className="absolute inset-[10%] left-[22%] block" aria-hidden>
                     <ProductImage src={g.image} alt="" className="mix-blend-multiply" />
                   </span>
                 ) : null}
@@ -167,7 +167,11 @@ export function readableAccent(fg: string, bg: string): string {
   return "var(--color-ink)";
 }
 
-/** "Популярни категории": coloured tiles with the category's icon, product count and picture. */
+/**
+ * "Популярни категории" (XXL Nutrition's / ESN's category tiles): grey tiles with a product picture and the name. Phones:
+ * a swipeable row of upright tiles (the Bulgarian names are too long for XXL's 2-column horizontal tiles at 390 px);
+ * from md a 4-column grid (upright tiles; from xl horizontal ones — picture left, name + count + chevron right).
+ */
 export function CategoryTiles({ lang, categories }: { lang: Lang; categories: NavCategory[] }) {
   const dict = getDict(lang);
   const t = dict.home.categories;
@@ -175,24 +179,24 @@ export function CategoryTiles({ lang, categories }: { lang: Lang; categories: Na
   return (
     <section aria-labelledby="home-categories" className="container-shop py-8 md:py-12">
       <SectionHeader id="home-categories" title={t.title} subtitle={t.subtitle} href="/produkti" linkLabel={t.all} lang={lang} />
-      <ul className="-mx-4 grid auto-cols-[42%] grid-flow-col grid-rows-2 gap-3 overflow-x-auto px-4 pb-2 [scroll-snap-type:x_mandatory] scroll-px-4 md:scroll-px-0 sm:auto-cols-[30%] md:mx-0 md:grid-flow-row md:grid-cols-4 md:grid-rows-none md:overflow-visible md:px-0 md:pb-0 xl:grid-cols-8">
+      <ul className="-mx-4 grid auto-cols-[38%] grid-flow-col gap-2.5 overflow-x-auto px-4 pb-2 [scroll-snap-type:x_mandatory] scroll-px-4 min-[480px]:auto-cols-[28%] md:mx-0 md:grid-flow-row md:grid-cols-4 md:gap-3 md:overflow-visible md:px-0 md:pb-0 lg:gap-4">
         {categories.map((c) => (
-          <li key={c.slug} className="[scroll-snap-align:start]">
+          <li key={c.slug} className="min-w-0 [scroll-snap-align:start]">
             <Link
               href={localizeHref(`/kategoria/${c.slug}`, lang)}
-              className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-lg)] border border-line bg-surface transition hover:border-[#c8c8c8] hover:shadow-[var(--shadow-lift)]"
+              className="group flex h-full flex-col items-center gap-2 rounded-[var(--radius-lg)] bg-canvas p-3 text-center transition hover:bg-[#ececec] md:p-4 xl:min-h-[4.5rem] xl:flex-row xl:gap-3 xl:p-3 xl:text-left"
             >
-              <span className="relative block aspect-square bg-canvas p-[16%]" aria-hidden>
-                <span className="absolute left-2 top-2 grid h-8 w-8 place-items-center rounded-full bg-surface" style={{ color: readableAccent(c.accent, "#ffffff") }}>
-                  <CategoryIcon icon={c.icon} className="h-[1.1rem] w-[1.1rem]" />
-                </span>
-                <span className="block h-full w-full transition duration-300 group-hover:scale-105">
+              <span className="block h-20 w-20 shrink-0 md:h-24 md:w-24 xl:h-20 xl:w-20" aria-hidden>
+                <span className="block h-full w-full">
                   <ProductImage src={c.image} alt="" className="mix-blend-multiply" />
                 </span>
               </span>
-              <span className="flex flex-col gap-0.5 px-2.5 py-2.5 md:px-3">
-                <span className="text-[0.88rem] font-extrabold leading-tight group-hover:text-primary md:text-[0.92rem]">{c.name}</span>
-                <span className="text-xs tabular-nums text-muted">{plural(lang, c.count, dict.common.products)}</span>
+              <span className="flex w-full min-w-0 flex-1 items-center justify-center gap-1.5 xl:justify-between">
+                <span className="min-w-0">
+                  <span className="line-clamp-2 text-[0.85rem] font-extrabold leading-tight group-hover:text-primary md:text-[0.9rem] lg:text-base">{c.name}</span>
+                  <span className="mt-0.5 hidden text-xs tabular-nums text-muted md:block">{plural(lang, c.count, dict.common.products)}</span>
+                </span>
+                <ChevronRight className="hidden h-5 w-5 shrink-0 transition group-hover:translate-x-0.5 group-hover:text-primary xl:block" aria-hidden />
               </span>
             </Link>
           </li>
@@ -231,12 +235,12 @@ export function GiftTiersBlock({ lang, tiers, single }: { lang: Lang; tiers: Pub
                 {t.shop}
               </Link>
             </div>
-            <Link href={localizeHref("/obshti-usloviya#podaratsi", lang)} className="mt-4 inline-block text-sm text-white/80 underline underline-offset-2 hover:text-white">
+            <Link href={localizeHref("/obshti-usloviya#podaratsi", lang)} className="mt-2 inline-flex min-h-10 items-center text-sm text-white underline underline-offset-2 hover:text-white">
               {t.terms}
             </Link>
           </div>
 
-          <ol className="relative grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <ol className="relative grid gap-4 sm:grid-cols-3">
             {shown.map((tier, i) => (
               <li key={tier.id} className="flex flex-col rounded-[var(--radius-lg)] bg-white/[0.06] p-5 ring-1 ring-white/10">
                 <div className="flex items-baseline justify-between gap-3">
@@ -306,7 +310,7 @@ export function NewsletterBand({ lang }: { lang: Lang }) {
     <section id="home-newsletter" aria-labelledby="home-newsletter-title" className="container-shop py-8 md:py-12">
       <div className="on-dark relative overflow-hidden rounded-[var(--radius-xl)] bg-primary px-5 py-8 text-white md:px-12 md:py-12">
         <span className="pointer-events-none absolute inset-y-0 -right-20 hidden w-[36%] -skew-x-[14deg] bg-black/10 md:block" aria-hidden />
-        <div className="relative grid gap-8 lg:grid-cols-2 lg:items-center">
+        <div className="relative grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-2 lg:items-center">
           <div>
             <h2 id="home-newsletter-title" className="h-display text-[1.5rem] text-white md:text-[2.1rem]">
               {t.title}

@@ -11,11 +11,11 @@ export function SortSelect({ value, options }: { value: string; options: { key: 
   const t = useDict().listing;
   const id = useId();
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex min-w-0 items-center gap-2">
       <label htmlFor={id} className="hidden text-sm font-semibold text-muted sm:inline">
         {t.sortLabel}
       </label>
-      <div className="relative">
+      <div className="relative min-w-0 flex-1 sm:flex-none">
         <select
           id={id}
           value={value}
@@ -24,7 +24,7 @@ export function SortSelect({ value, options }: { value: string; options: { key: 
             const opt = options.find((o) => o.key === e.target.value);
             if (opt) router.push(opt.href, { scroll: false });
           }}
-          className="h-11 cursor-pointer appearance-none rounded-[var(--radius-md)] border-[1.5px] border-ink bg-surface pl-4 pr-9 text-[0.9rem] font-bold text-ink transition hover:bg-canvas focus:border-primary"
+          className="h-11 w-full min-w-0 cursor-pointer appearance-none truncate rounded-[var(--radius-md)] border-[1.5px] border-ink bg-surface pl-4 pr-9 text-[0.9rem] font-bold text-ink transition hover:bg-canvas focus:border-primary"
         >
           {options.map((o) => (
             <option key={o.key} value={o.key}>

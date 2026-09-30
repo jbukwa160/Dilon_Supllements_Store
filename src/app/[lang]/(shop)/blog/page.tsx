@@ -91,13 +91,13 @@ export default async function BlogIndex({ params, searchParams }: PageProps<"/[l
         <nav aria-label={t.topics} className="-mx-4 mb-8 overflow-x-auto px-4 md:mx-0 md:px-0">
           <ul className="flex w-max gap-2 md:w-auto md:flex-wrap">
             <li>
-              <Link href={href(null)} className="chip whitespace-nowrap" aria-current={!topic ? "page" : undefined}>
+              <Link href={href(null)} className="chip min-h-10 whitespace-nowrap" aria-current={!topic ? "page" : undefined}>
                 {t.all}
               </Link>
             </li>
             {topics.map((x) => (
               <li key={x.slug}>
-                <Link href={href(x.slug)} className="chip whitespace-nowrap" aria-current={topic?.slug === x.slug ? "page" : undefined}>
+                <Link href={href(x.slug)} className="chip min-h-10 whitespace-nowrap" aria-current={topic?.slug === x.slug ? "page" : undefined}>
                   {x.name} <span className="text-muted">{x.count}</span>
                 </Link>
               </li>

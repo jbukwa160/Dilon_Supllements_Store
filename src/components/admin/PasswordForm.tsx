@@ -11,7 +11,7 @@ export function PasswordForm() {
       <h2 className="flex items-center gap-2 text-xl font-black">
         <KeyRound className="h-5 w-5" /> Смяна на парола
       </h2>
-      <div className="mt-5 grid max-w-md gap-4">
+      <div className="mt-5 grid max-w-md grid-cols-[minmax(0,1fr)] gap-4">
         <label className="block">
           <span className="mb-1.5 block text-sm font-extrabold">Сегашна парола</span>
           <input type="password" name="current" autoComplete="current-password" required className="field" />

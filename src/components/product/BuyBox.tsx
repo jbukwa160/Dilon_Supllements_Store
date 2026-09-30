@@ -31,21 +31,21 @@ export function BuyBox({ snapshot, canBuy, id }: { snapshot: CartSnapshot; canBu
           setAdded(true);
           window.setTimeout(() => setAdded(false), 2500);
         }}
-        className="btn btn-primary h-12 min-w-0 flex-1 px-4 text-[0.9rem] tracking-[0.02em] max-sm:order-last max-sm:basis-full"
+        className="btn btn-primary h-12 min-w-0 flex-1 px-4 text-[0.95rem] tracking-[0.02em] max-lg:order-last max-lg:basis-full max-sm:h-14 max-sm:text-base"
       >
         <ShoppingBag className="h-5 w-5 shrink-0" aria-hidden />
         {canBuy ? (
           <>
-            {/* Phones: the button gets its own full-width row under quantity + heart, so the full label fits. In the
-                two-column layout (md–xl, 768–1279 px) the column is narrow: the short label keeps one row. */}
-            <span className="hidden truncate md:inline xl:hidden">{t.addShort}</span>
-            <span className="truncate md:hidden xl:inline">{t.addToCart}</span>
+            {/* Phones and tablets: the button gets its own full-width row under quantity + heart, so the full label
+                fits. On small laptops (lg, 1024–1279 px) the buy column is narrow: the short label keeps one row. */}
+            <span className="hidden truncate lg:inline xl:hidden">{t.addShort}</span>
+            <span className="truncate lg:hidden xl:inline">{t.addToCart}</span>
           </>
         ) : (
           t.outOfStock
         )}
       </button>
-      <div className="grid h-12 w-12 shrink-0 place-items-center rounded-[var(--radius-md)] border-[1.5px] border-[#cfcfcf] bg-surface max-sm:ml-auto">
+      <div className="grid h-12 w-12 shrink-0 place-items-center rounded-[var(--radius-md)] border-[1.5px] border-[#cfcfcf] bg-surface max-lg:ml-auto">
         <WishlistButton snapshot={snapshot} variant="icon" />
       </div>
       <p className="sr-only" aria-live="polite">

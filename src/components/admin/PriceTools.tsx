@@ -8,6 +8,7 @@ import { applyBulkAction, applyPriceFileAction, previewBulkAction } from "@/app/
 import { uploadPriceFile } from "@/app/admin/_actions/uploads";
 import type { BulkInput, BulkPreview, PricePreview } from "@/lib/admin/prices";
 import { Card, Field } from "./ui";
+import { ScrollArea } from "@/components/admin/ScrollArea";
 
 export type CategoryOption = { slug: string; name: string; subs: { slug: string; name: string }[] };
 export type BrandOption = { slug: string; name: string; count: number };
@@ -223,7 +224,7 @@ function FileImport({ categories }: { categories: CategoryOption[] }) {
             <div className="w-full sm:w-80">
               <CategorySelect value={kat} onChange={setKat} categories={categories} allLabel="Всички продукти" ariaLabel="Кои продукти да съдържа файлът" />
             </div>
-            <a href={`/admin/tseni/export?format=xlsx${q}`} className="btn btn-primary h-12 px-5 !shadow-none">
+            <a href={`/admin/tseni/export?format=xlsx${q}`} className="btn btn-primary h-auto min-h-12 max-w-full whitespace-normal px-5 py-2 !shadow-none">
               <Download className="h-4 w-4" /> Изтегли за Excel
             </a>
             <a href={`/admin/tseni/export?format=csv${q}`} className="btn btn-ghost h-12 px-4 text-sm">
@@ -258,7 +259,7 @@ function FileImport({ categories }: { categories: CategoryOption[] }) {
         </Step>
         <Step n={3} title="Качете файла">
           <div className="flex flex-wrap items-center gap-3">
-            <button type="button" onClick={() => input.current?.click()} disabled={pending} className="btn btn-primary h-12 px-5 !shadow-none">
+            <button type="button" onClick={() => input.current?.click()} disabled={pending} className="btn btn-primary h-auto min-h-12 max-w-full whitespace-normal px-5 py-2 !shadow-none">
               {pending && !preview ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />} Качи файл (.xlsx или .csv)
             </button>
             {fileName ? <span className="text-sm text-muted">{fileName}</span> : null}
@@ -339,7 +340,7 @@ function FileImport({ categories }: { categories: CategoryOption[] }) {
               </p>
             ) : null}
             {preview.samples.length ? (
-              <div className="mt-4 overflow-x-auto rounded-xl border border-line bg-white">
+              <ScrollArea className="rounded-xl border border-line bg-white" wrapperClassName="mt-4">
                 <table className="w-full min-w-[640px] text-left text-sm">
                   <thead className="bg-canvas text-xs font-extrabold uppercase text-muted">
                     <tr>
@@ -362,7 +363,7 @@ function FileImport({ categories }: { categories: CategoryOption[] }) {
                   </tbody>
                 </table>
                 {preview.changed > preview.samples.length ? <p className="px-3 py-2 text-xs text-muted">…и още {preview.changed - preview.samples.length}</p> : null}
-              </div>
+              </ScrollArea>
             ) : null}
             <div className="mt-4 flex flex-wrap gap-2">
               {preview.id ? (
@@ -487,7 +488,7 @@ function BulkChange({ categories, brands }: { categories: CategoryOption[]; bran
         </div>
 
         <div className="flex flex-wrap gap-2">
-          <button type="button" onClick={check} disabled={pending || !pctOk || (input.scope !== "all" && !input.value)} className="btn btn-ghost h-12 px-6">
+          <button type="button" onClick={check} disabled={pending || !pctOk || (input.scope !== "all" && !input.value)} className="btn btn-ghost h-auto min-h-12 max-w-full whitespace-normal px-6 py-2">
             {pending && !preview ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null} Провери какво ще се промени
           </button>
         </div>

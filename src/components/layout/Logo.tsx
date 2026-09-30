@@ -36,7 +36,7 @@ export function Logo({
   const [first, ...rest] = name.trim().split(/\s+/);
   const dark = variant === "dark";
   return (
-    <Link href={href} aria-label={label ?? name} className={clsx("flex shrink-0 items-center gap-2", className)}>
+    <Link href={href} aria-label={label ?? name} className={clsx("flex min-h-11 shrink-0 items-center gap-2", className)}>
       <LogoMark className="h-9 w-9 md:h-10 md:w-10" />
       <span className="flex flex-col leading-none" aria-hidden>
         <span className={clsx("font-display text-[1.45rem] font-black uppercase italic tracking-[-0.035em] md:text-[1.7rem]", dark ? "text-white" : "text-ink")}>

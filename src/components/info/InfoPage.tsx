@@ -96,7 +96,7 @@ export function InfoPage({
                 <ol className="space-y-0.5">
                   {items.map((i) => (
                     <li key={i.id}>
-                      <a href={`#${i.id}`} className="block rounded-sm py-1.5 text-[0.95rem] leading-snug text-ink-soft hover:text-primary">
+                      <a href={`#${i.id}`} className="block rounded-sm py-2.5 text-[0.95rem] leading-snug text-ink-soft hover:text-primary">
                         {i.title}
                       </a>
                     </li>

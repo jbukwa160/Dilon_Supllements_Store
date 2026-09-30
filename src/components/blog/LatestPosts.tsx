@@ -21,7 +21,7 @@ export async function LatestPosts({ lang }: { lang: Lang }) {
           </h2>
           <p className="mt-1 text-muted">{t.home.subtitle}</p>
         </div>
-        <Link href={localizeHref("/blog", lang)} className="inline-flex shrink-0 items-center gap-1 font-semibold text-primary hover:underline">
+        <Link href={localizeHref("/blog", lang)} className="inline-flex min-h-10 shrink-0 items-center gap-1 text-sm font-extrabold uppercase tracking-[0.02em] text-ink hover:text-primary hover:underline">
           {t.allPosts} <ArrowRight className="h-4 w-4" aria-hidden />
         </Link>
       </div>

@@ -205,7 +205,8 @@ export function Listing({ lang, scope, basePath, searchParams, defaultSort = "po
           <p className="text-[0.95rem] font-semibold text-muted" aria-live="polite">
             {plural(lang, total, dict.listing.count)}
           </p>
-          <div className="flex items-center gap-2">
+          {/* Phones: "Филтри" and the sort select as two equal buttons (GymBeam / XXL); from sm side by side on the right. */}
+          <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:items-center">
             <MobileFilters active={chips.length} total={total}>
               {sidebar}
             </MobileFilters>

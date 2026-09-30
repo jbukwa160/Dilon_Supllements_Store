@@ -20,8 +20,8 @@ export function TopBar({ lang, settings: s, giftFrom }: { lang: Lang; settings: 
   const href = (path: string) => localizeHref(path, lang);
   const strong = (v: string) => <strong className="font-extrabold text-white">{v}</strong>;
   const item = "flex min-w-0 items-center gap-1.5 whitespace-nowrap";
-  // Links fill the bar's height (36 px) so they are comfortable tap / click targets, not just the 20 px line of text.
-  const tap = "h-9";
+  // Links fill the bar's height (40 px) so they are comfortable tap / click targets, not just the 20 px line of text.
+  const tap = "h-10";
   const icon = "h-4 w-4 shrink-0 text-white";
 
   const messages: { key: string; node: React.ReactNode; wide?: boolean }[] = [];
@@ -62,7 +62,7 @@ export function TopBar({ lang, settings: s, giftFrom }: { lang: Lang; settings: 
   const phoneHref = `tel:${s.phone.replace(/[^\d+]/g, "")}`;
   return (
     <div className="on-dark bg-primary text-[0.8rem] font-semibold text-white">
-      <div className="container-shop flex h-9 items-center gap-4">
+      <div className="container-shop flex h-10 items-center gap-4">
         <ul className="hidden min-w-0 items-center gap-6 lg:flex" aria-label={dict.header.uspLabel}>
           {messages.map((m) => (
             <li key={m.key} className={m.wide && messages.length > 2 ? "hidden xl:block" : undefined}>
@@ -78,14 +78,14 @@ export function TopBar({ lang, settings: s, giftFrom }: { lang: Lang; settings: 
           ))}
         </UspRotator>
         <div className="ml-auto hidden shrink-0 items-center gap-5 md:flex">
-          <Link href={href("/dostavka")} className="hidden h-9 items-center hover:underline lg:inline-flex">
+          <Link href={href("/dostavka")} className="hidden h-10 items-center hover:underline lg:inline-flex">
             {dict.header.deliveryAndPayment}
           </Link>
-          <Link href={href("/kontakti")} className="hidden h-9 items-center hover:underline lg:inline-flex">
+          <Link href={href("/kontakti")} className="hidden h-10 items-center hover:underline lg:inline-flex">
             {dict.header.contacts}
           </Link>
           {s.phone ? (
-            <a href={phoneHref} className="hidden h-9 items-center gap-1.5 font-semibold text-white hover:underline xl:flex" aria-label={fmt(dict.header.callUs, { phone: s.phone })}>
+            <a href={phoneHref} className="hidden h-10 items-center gap-1.5 font-semibold text-white hover:underline xl:flex" aria-label={fmt(dict.header.callUs, { phone: s.phone })}>
               <Phone className="h-4 w-4 text-white" aria-hidden /> {s.phone}
             </a>
           ) : null}

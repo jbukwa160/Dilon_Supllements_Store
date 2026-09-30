@@ -367,7 +367,7 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/produkt
       <div className="container-shop">
         <Breadcrumbs items={crumbs} />
         <div className="grid gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-12">
-          <div className="min-w-0 md:sticky md:top-24 md:self-start lg:top-[9.5rem]">
+          <div className="min-w-0 md:sticky md:top-36 md:self-start lg:top-[9.5rem]">
             <Gallery key={p.id} images={p.images} alt={title(p)} badges={badges} />
           </div>
 
@@ -377,7 +377,7 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/produkt
                 p.brandSlug ? (
                   <Link
                     href={localizeHref(`/marka/${p.brandSlug}`, lang)}
-                    className="-my-1.5 inline-block py-1.5 text-[0.8rem] font-bold uppercase tracking-[0.06em] text-muted hover:text-primary"
+                    className="-my-2.5 inline-block py-2.5 text-[0.8rem] font-bold uppercase tracking-[0.06em] text-muted hover:text-primary"
                   >
                     {p.brand}
                   </Link>

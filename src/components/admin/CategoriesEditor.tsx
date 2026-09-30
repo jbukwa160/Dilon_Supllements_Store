@@ -102,7 +102,7 @@ export function CategoriesEditor({ initial, goals, counts, goalCounts, autoImage
                 return (
                   <li key={c.slug} className={clsx("rounded-2xl border-2", isOpen ? "border-ink" : "border-line", c.hidden && !isOpen && "bg-canvas")}>
                     <div className="flex flex-wrap items-center gap-3 p-3">
-                      <button type="button" onClick={() => setOpen(isOpen ? null : c.slug)} className="flex min-w-0 flex-1 items-center gap-3 text-left" aria-expanded={isOpen}>
+                      <button type="button" onClick={() => setOpen(isOpen ? null : c.slug)} className="flex min-w-0 flex-1 basis-60 items-center gap-3 text-left" aria-expanded={isOpen}>
                         <span className={clsx("grid h-11 w-11 shrink-0 place-items-center rounded-xl", c.hidden && "opacity-50")} style={{ background: c.color, color: c.accent }}>
                           <CategoryIcon icon={c.icon} className="h-5 w-5" />
                         </span>
@@ -261,7 +261,7 @@ function CategoryPanel({
         <IconPicker value={c.icon} onChange={(icon) => onChange({ icon })} color={c.color} accent={c.accent} />
       </Field>
 
-      <div className="grid gap-5 lg:grid-cols-[1fr_220px]">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_220px]">
         <Field label="Цвят на плочката" group hint="Фон на плочката в менюто и на началната страница.">
           <ColorField value={c.color} onChange={(v) => onChange({ color: v })} presets={TILE_COLORS} />
         </Field>

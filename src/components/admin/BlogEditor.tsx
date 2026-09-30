@@ -201,7 +201,7 @@ export function BlogEditor({ id, initial, topics, candidates, group, isOriginal,
 
   return (
     <>
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="min-w-0 space-y-6">
           <Card>
             <div className="mb-4 flex flex-wrap items-center gap-2" role="radiogroup" aria-label="Език на статията">

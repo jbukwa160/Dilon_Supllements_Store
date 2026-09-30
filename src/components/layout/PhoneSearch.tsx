@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { Search } from "lucide-react";
 import { useDict } from "@/i18n/client";
 
-// Phones (< md): the header's full-width search row slides up behind the logo row while the visitor scrolls down and
+// Phones and tablets (< lg): the header's full-width search row slides up behind the logo row while the visitor scrolls down and
 // comes back on the first scroll up (reference-ux §7); a search icon in the logo row brings it back on demand.
 // No layout shift: the row is positioned absolutely under the sticky header and a static spacer of the same height
 // (rendered by Header after </header>, h-[61px]) reserves its place at the top of the page, so collapsing
@@ -39,7 +39,7 @@ const useCollapsed = () =>
     () => false,
   );
 
-/** The search row itself (children = the SearchBox). Hidden from `md` up (the search sits in the logo row there). */
+/** The search row itself (children = the SearchBox). Hidden from `lg` up (the search sits in the logo row there). */
 export function PhoneSearchRow({ children }: { children: React.ReactNode }) {
   const hidden = useCollapsed();
   const ref = useRef<HTMLDivElement>(null);
@@ -53,7 +53,7 @@ export function PhoneSearchRow({ children }: { children: React.ReactNode }) {
       const y = window.scrollY;
       const dy = y - lastY;
       lastY = y;
-      if (window.matchMedia("(min-width: 768px)").matches || y < TOP) {
+      if (window.matchMedia("(min-width: 1024px)").matches || y < TOP) {
         run = 0;
         setCollapsed(false);
         return;
@@ -92,7 +92,7 @@ export function PhoneSearchRow({ children }: { children: React.ReactNode }) {
       inert={hidden}
       aria-hidden={hidden || undefined}
       className={clsx(
-        "absolute inset-x-0 top-full border-b border-line bg-surface transition-transform duration-200 ease-out md:hidden",
+        "absolute inset-x-0 top-full border-b border-line bg-surface transition-transform duration-200 ease-out lg:hidden",
         ROW_HEIGHT,
         hidden ? "-translate-y-full" : "translate-y-0",
       )}
@@ -102,7 +102,7 @@ export function PhoneSearchRow({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** Search icon for the logo row: shown on phones only while the row is tucked away; brings it back and focuses it. */
+/** Search icon for the logo row: shown on phones and tablets only while the row is tucked away; brings it back and focuses it. */
 export function PhoneSearchButton() {
   const hidden = useCollapsed();
   const t = useDict().header;
@@ -116,7 +116,7 @@ export function PhoneSearchButton() {
         // preventScroll: the row is already on screen; without it Chrome scrolls to the sticky header's place in the page.
         requestAnimationFrame(() => document.querySelector<HTMLInputElement>("[data-phone-search] input")?.focus({ preventScroll: true }));
       }}
-      className="grid h-11 w-11 animate-fade-in place-items-center rounded-pill transition hover:bg-canvas md:hidden"
+      className="grid h-11 w-11 animate-fade-in place-items-center rounded-pill transition hover:bg-canvas lg:hidden"
       aria-label={t.search}
       data-phone-search-toggle
     >

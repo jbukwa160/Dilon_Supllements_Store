@@ -73,7 +73,7 @@ export default async function OrderAdminPage({ params }: PageProps<"/admin/poruc
         </p>
       ) : null}
 
-      <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
         <div className="min-w-0 space-y-5">
           <section className="rounded-3xl border border-line bg-white p-5 md:p-6" aria-labelledby="order-lines">
             <h2 id="order-lines" className="text-lg font-black">
@@ -177,7 +177,7 @@ export default async function OrderAdminPage({ params }: PageProps<"/admin/poruc
             </section>
           ) : null}
 
-          <section className="grid gap-5 md:grid-cols-2">
+          <section className="grid grid-cols-[minmax(0,1fr)] gap-5 md:grid-cols-2">
             <div className="rounded-3xl border border-line bg-white p-5 md:p-6">
               <h2 className="text-lg font-black">Клиент</h2>
               <p className="mt-2 font-bold">
@@ -235,7 +235,7 @@ export default async function OrderAdminPage({ params }: PageProps<"/admin/poruc
                   Код на офиса{courier ? ` в ${courier}` : ""}: <b className="text-ink">{o.delivery.officeId}</b>
                 </p>
               ) : null}
-              <p className="mt-3 flex items-center gap-2 border-t border-line pt-3">
+              <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-line pt-3">
                 <Wallet className="h-4 w-4 shrink-0 text-muted" />
                 <span className="text-ink-soft">Плащане:</span> <b>{isPaymentKey(o.payment) ? paymentLabel(o.payment, "bg") : o.payment}</b>
               </p>

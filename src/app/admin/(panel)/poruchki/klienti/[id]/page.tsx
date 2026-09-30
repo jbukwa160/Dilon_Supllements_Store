@@ -51,9 +51,9 @@ export default async function CustomerAdminPage({ params, searchParams }: PagePr
         }
       />
 
-      <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
         <div className="min-w-0 space-y-5">
-          <section className="grid gap-5 md:grid-cols-2">
+          <section className="grid grid-cols-[minmax(0,1fr)] gap-5 md:grid-cols-2">
             <div className="rounded-3xl border border-line bg-white p-5 md:p-6">
               <h2 className="text-lg font-black">Профил</h2>
               <p className="mt-2 flex items-center gap-2">

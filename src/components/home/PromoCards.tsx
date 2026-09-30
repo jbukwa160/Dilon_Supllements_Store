@@ -36,13 +36,13 @@ export function PromoCards({ promos, lang, autoImage = {} }: { promos: PromoCard
         const external = isExternalHref(c.href);
         const body = (
           <>
-            <span className="relative z-10 flex max-w-[64%] flex-col">
-              <span className="text-xl font-extrabold uppercase leading-tight tracking-[-0.01em] md:text-[1.35rem]">{title}</span>
-              {text ? <span className={clsx("mt-1.5 text-sm leading-snug", theme.dark ? "text-white" : "text-ink-soft")}>{text}</span> : null}
+            <span className={clsx("relative z-10 flex flex-col justify-center", image ? "max-w-[58%]" : "max-w-[64%]")}>
+              <span className="text-[1.4rem] font-black uppercase leading-[1.02] tracking-[-0.02em] md:text-[1.6rem] xl:text-[1.9rem]">{title}</span>
+              {text ? <span className={clsx("mt-2 text-[0.92rem] leading-snug", theme.dark ? "text-white" : "text-ink-soft")}>{text}</span> : null}
               {button ? (
                 <span
                   className={clsx(
-                    "mt-4 inline-flex min-h-10 w-fit items-center gap-1.5 whitespace-nowrap rounded-[var(--radius-md)] px-4 py-2 text-[0.8rem] font-extrabold uppercase tracking-[0.03em]",
+                    "mt-5 inline-flex min-h-11 w-fit max-w-full items-center gap-1.5 rounded-[var(--radius-md)] px-4 py-2 text-[0.8rem] font-extrabold uppercase tracking-[0.03em]",
                     theme.dark ? "bg-white text-ink" : "bg-primary text-white",
                   )}
                 >
@@ -51,14 +51,17 @@ export function PromoCards({ promos, lang, autoImage = {} }: { promos: PromoCard
               ) : null}
             </span>
             {image ? (
-              <span className="absolute -bottom-3 -right-3 h-36 w-36 rounded-full bg-white/75 p-5 transition duration-300 group-hover:scale-105 md:h-40 md:w-40" aria-hidden>
+              <span className="absolute -right-[7%] top-1/2 aspect-square w-[46%] max-w-[13rem] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,#ffffff_0%,#ffffff_58%,rgba(255,255,255,0.6)_100%)] p-[7%] transition duration-300 group-hover:scale-105" aria-hidden>
                 <ProductImage src={image} alt="" className={c.image ? "" : "mix-blend-multiply"} />
               </span>
-            ) : null}
+            ) : (
+              // No picture: the brand's slanted colour block on the right instead.
+              <span className={clsx("pointer-events-none absolute inset-y-0 -right-12 w-[34%] -skew-x-[14deg]", theme.dark ? "bg-white/10" : "bg-accent")} aria-hidden />
+            )}
           </>
         );
         const cls = clsx(
-          "group relative flex h-full min-h-44 overflow-hidden rounded-[var(--radius-xl)] p-6 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]",
+          "group relative flex h-full min-h-52 overflow-hidden rounded-[var(--radius-xl)] p-6 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] md:min-h-60 md:p-8",
           theme.dark ? "on-dark text-white" : "text-ink",
         );
         return (

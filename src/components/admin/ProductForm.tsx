@@ -311,11 +311,11 @@ export function ProductForm({
         ))}
       </nav>
 
-      <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
         <div className="min-w-0 space-y-5">
           <Section id="osnovni">
             <Card title="Основна информация">
-              <div className="grid gap-4">
+              <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
                 <Field label="Име на продукта *" group error={errors.name ?? errors.nameEn} hint="Английското име се показва в английската версия на сайта; празно = българското.">
                   <L10nInput label="Име на продукта" value={{ bg: form.name, en: form.nameEn }} onChange={(v) => update({ name: v.bg, nameEn: v.en })} maxLength={300} invalid={!!errors.name} />
                 </Field>
@@ -387,7 +387,7 @@ export function ProductForm({
               {form.kind === "non-food" ? (
                 <p className="mb-5 rounded-2xl bg-canvas p-4 text-sm font-bold text-ink-soft">Нехранителен продукт — полетата за етикет на храна не са задължителни.</p>
               ) : null}
-              <div className="grid gap-4">
+              <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
                 <Toggle
                   checked={form.adultOnly}
                   onChange={(v) => set("adultOnly", v)}

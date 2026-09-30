@@ -74,14 +74,14 @@ export function NutritionEditor({ value, onChange, kind, invalid }: { value: Nut
         <p className="rounded-2xl border-2 border-dashed border-line p-5 text-center text-sm text-ink-soft">Таблицата е празна.</p>
       )}
       <div className="mt-3 flex flex-wrap gap-2">
-        <button type="button" onClick={() => onChange([...value, { ...EMPTY_ROW }])} disabled={value.length >= 60} className="btn btn-ghost h-10 px-4 text-sm">
+        <button type="button" onClick={() => onChange([...value, { ...EMPTY_ROW }])} disabled={value.length >= 60} className="btn btn-ghost min-h-10 max-w-full whitespace-normal px-4 py-2 text-left text-sm">
           <Plus className="h-4 w-4" strokeWidth={3} /> Добави ред
         </button>
         {kind !== "non-food" && missingDeclaration.length ? (
           <button
             type="button"
             onClick={() => onChange([...value.filter((r) => r.name.trim() || r.perServing || r.per100 || r.nrv), ...missingDeclaration.map((name) => ({ ...EMPTY_ROW, name }))])}
-            className="btn btn-ghost h-10 px-4 text-sm"
+            className="btn btn-ghost min-h-10 max-w-full whitespace-normal px-4 py-2 text-left text-sm"
             title={DECLARATION.join(", ")}
           >
             <ListPlus className="h-4 w-4" /> Добави редовете за хранителна стойност

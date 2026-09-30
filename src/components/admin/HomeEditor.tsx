@@ -249,7 +249,7 @@ function SlideEditor({
           <span className="text-sm font-extrabold text-muted">Преглед</span>
           <PreviewLang value={lang} onChange={setLang} />
         </div>
-        <div className="grid gap-3 lg:grid-cols-[1fr_auto]">
+        <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto]">
           <div className="shop-theme pointer-events-none overflow-hidden" aria-hidden>
             {/* zoom (unlike transform) also shrinks the space the preview takes */}
             <div style={{ zoom: 0.6 }}>

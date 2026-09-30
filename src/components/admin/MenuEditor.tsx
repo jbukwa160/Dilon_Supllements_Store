@@ -363,7 +363,7 @@ function ItemEditor({ item, onChange, linkOptions, lang }: { item: MenuItem; onC
             <div className="mt-4">
               <div className="mb-2 text-sm font-extrabold text-muted">Преглед на панела</div>
               <div className="shop-theme pointer-events-none rounded-xl border border-line bg-white p-6 shadow-[var(--shadow-lift)]" aria-hidden>
-                <div className="grid gap-6" style={{ gridTemplateColumns: `repeat(${Math.max(1, item.columns.length)}, minmax(0, 1fr))` }}>
+                <div className="grid grid-cols-[minmax(0,1fr)] gap-6" style={{ gridTemplateColumns: `repeat(${Math.max(1, item.columns.length)}, minmax(0, 1fr))` }}>
                   {item.columns.map((c) => (
                     <MenuColumnView key={c.id} column={c} accent={accent} lang={lang} />
                   ))}
@@ -448,7 +448,7 @@ export function MenuEditor({ initial, linkOptions }: { initial: MenuConfig; link
         <div className="space-y-4">
           <Toggle checked={menu.categories.show} onChange={(show) => ed.setValue((m) => ({ ...m, categories: { ...m.categories, show } }))} label="Показвай бутона" />
           {menu.categories.show ? (
-            <div className="grid gap-4 lg:grid-cols-[20rem_1fr]">
+            <div className="grid gap-4 lg:grid-cols-[20rem_minmax(0,1fr)]">
               <Field group label="Надпис на бутона">
                 <L10nInput value={menu.categories.label} onChange={(label) => ed.setValue((m) => ({ ...m, categories: { ...m.categories, label } }))} label="Надпис на бутона" maxLength={40} />
               </Field>

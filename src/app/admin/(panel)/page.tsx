@@ -8,6 +8,7 @@ import { ORDER_STATUSES } from "@/lib/orders";
 import { formatDateTime, formatPrice } from "@/lib/format";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { DashboardBanner, QuickAction, SectionTitle, StatTile, StatusPill } from "@/components/admin/Dashboard";
+import { ScrollArea } from "@/components/admin/ScrollArea";
 
 export const metadata: Metadata = { title: "Табло" };
 
@@ -104,7 +105,7 @@ export default async function DashboardPage() {
             Последни поръчки
           </SectionTitle>
           {d.orders.recent.length ? (
-            <div className="overflow-x-auto rounded-3xl border border-line bg-white">
+            <ScrollArea className="rounded-3xl border border-line bg-white">
               <table className="w-full min-w-[560px] text-left text-[0.95rem]">
                 <tbody className="divide-y divide-line">
                   {d.orders.recent.map((o) => (
@@ -124,7 +125,7 @@ export default async function DashboardPage() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </ScrollArea>
           ) : (
             <div className="flex items-center gap-3 rounded-3xl border border-dashed border-line bg-white p-6 text-ink-soft">
               <ShoppingBag className="h-6 w-6" /> Все още няма поръчки.

@@ -70,7 +70,7 @@ export function GuaranteeNotice({ lang, className, id = "legal-guarantee" }: { l
             <ExternalLink className="ml-1 inline h-3.5 w-3.5 align-[-2px]" aria-hidden />
             <span className="sr-only">{newTab}</span>
           </a>
-          <Link href={localizeHref("/obshti-usloviya#garantsiya", lang)} className="underline underline-offset-2" style={{ color: EU_BLUE }}>
+          <Link href={localizeHref("/obshti-usloviya#garantsiya", lang)} className="inline-flex min-h-10 items-center underline underline-offset-2" style={{ color: EU_BLUE }}>
             {t.claim}
           </Link>
         </p>

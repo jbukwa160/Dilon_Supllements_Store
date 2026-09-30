@@ -138,7 +138,7 @@ export function SettingsEditor({ initial }: { initial: StoreSettings }) {
               description="Същата настройка е и в „Цени и промоции → Безплатна доставка“."
             />
             {s.shipping.freeOn ? (
-              <div className="grid gap-4 md:grid-cols-[16rem_1fr]">
+              <div className="grid gap-4 md:grid-cols-[16rem_minmax(0,1fr)]">
                 <Field label="Безплатна над" hint="Сумата на продуктите след намаленията. 0 = винаги безплатна.">
                   <MoneyInput value={s.shipping.freeOver} onChange={(freeOver) => setShipping({ freeOver })} invalid={!(num(s.shipping.freeOver) >= 0)} />
                 </Field>

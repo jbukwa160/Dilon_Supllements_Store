@@ -66,7 +66,7 @@ export function MobileMenu({
       <Drawer open={open} onClose={close} title={dict.common.menu} side="left" bodyClassName="pb-6">
         <nav aria-label={dict.nav.mainNav} className="space-y-6 p-3">
           {links.length ? (
-            <div className="flex flex-wrap gap-2 px-1">
+            <div className={clsx("grid gap-2 px-1", links.length >= 3 ? "grid-cols-3" : "grid-cols-2")}>
               {links.map((i) => {
                 const p = menuItemProps(i.appearance);
                 return (
@@ -75,7 +75,7 @@ export function MobileMenu({
                     href={i.href}
                     lang={lang}
                     onClick={close}
-                    className={clsx(p.className, "min-h-10 py-1.5 text-sm", i.appearance.style === "plain" && "border-[1.5px] border-line")}
+                    className={clsx(p.className, "min-h-14 flex-col justify-center gap-0.5 bg-canvas px-1.5 py-1.5 text-center text-[0.78rem] whitespace-normal", i.appearance.style === "plain" && "border-[1.5px] border-line")}
                     style={p.style}
                   >
                     <MenuLabel label={loc(i.label, lang)} appearance={i.appearance} />
@@ -97,7 +97,7 @@ export function MobileMenu({
                   return (
                     <li key={c.slug} className="border-b border-line/70 last:border-0">
                       <div className="flex items-center">
-                        <Link href={href(`/kategoria/${c.slug}`)} onClick={close} className="flex min-h-12 min-w-0 flex-1 items-center gap-3 rounded-[var(--radius-md)] px-2 py-1.5 font-semibold">
+                        <Link href={href(`/kategoria/${c.slug}`)} onClick={close} className="flex min-h-14 min-w-0 flex-1 items-center gap-3 rounded-[var(--radius-md)] px-2 py-1.5 text-[0.9rem] font-extrabold uppercase tracking-[0.01em]">
                           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[var(--radius-sm)]" style={{ background: c.color, color: c.accent }}>
                             <CategoryIcon icon={c.icon} className="h-5 w-5" />
                           </span>

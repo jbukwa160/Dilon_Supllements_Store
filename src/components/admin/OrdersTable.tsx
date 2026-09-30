@@ -4,6 +4,7 @@ import { Gift, Phone, TriangleAlert, UserRound } from "lucide-react";
 import type { OrderRowSummary } from "@/lib/admin/orders";
 import { ORDER_STATUSES } from "@/lib/orders";
 import { formatDateTime, formatPrice } from "@/lib/format";
+import { ScrollArea } from "@/components/admin/ScrollArea";
 
 // The orders list (Поръчки and a customer's page): a table from `md`, cards on phones. Server-safe (no hooks).
 
@@ -62,7 +63,7 @@ export function OrdersTable({ orders, empty = "Няма поръчки.", showCu
       </ul>
 
       {/* tablets and up */}
-      <div className="hidden overflow-x-auto rounded-3xl border border-line bg-white md:block">
+      <ScrollArea className="rounded-3xl border border-line bg-white" wrapperClassName="hidden md:block">
         <table className={clsx("w-full text-left text-[0.95rem]", showCustomer ? "min-w-[760px]" : "min-w-[520px]")}>
           <thead className="border-b border-line bg-canvas text-xs font-extrabold uppercase tracking-wide text-muted">
             <tr>
@@ -150,7 +151,7 @@ export function OrdersTable({ orders, empty = "Няма поръчки.", showCu
             ))}
           </tbody>
         </table>
-      </div>
+      </ScrollArea>
     </>
   );
 }

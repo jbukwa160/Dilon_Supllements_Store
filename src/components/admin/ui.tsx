@@ -513,14 +513,14 @@ export function DateTimeInput({
   const [date = "", time = ""] = value ? value.split("T") : [];
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <div className={clsx("flex items-center rounded-[0.875rem] border-2 bg-white pl-3 focus-within:border-sky", invalid ? "border-brand" : "border-line")}>
+      <div className={clsx("flex min-w-0 max-w-full items-center rounded-[0.875rem] border-2 bg-white pl-3 focus-within:border-sky", invalid ? "border-brand" : "border-line")}>
         <CalendarClock className="h-5 w-5 shrink-0 text-muted" />
         <input
           type="date"
           value={date}
           onChange={(e) => onChange(e.target.value ? `${e.target.value}T${time || defaultTime}` : "")}
           aria-label={`${label} — дата`}
-          className="bg-transparent px-2 py-2.5 outline-none focus-visible:outline-none"
+          className="min-w-0 flex-1 bg-transparent px-2 py-2.5 outline-none focus-visible:outline-none"
         />
         <input
           type="time"
@@ -528,7 +528,7 @@ export function DateTimeInput({
           disabled={!date}
           onChange={(e) => onChange(`${date}T${e.target.value || defaultTime}`)}
           aria-label={`${label} — час`}
-          className="border-l-2 border-line bg-transparent px-2 py-2.5 outline-none focus-visible:outline-none disabled:opacity-40"
+          className="min-w-0 flex-1 border-l-2 border-line bg-transparent px-2 py-2.5 outline-none focus-visible:outline-none disabled:opacity-40"
         />
       </div>
       {value ? (

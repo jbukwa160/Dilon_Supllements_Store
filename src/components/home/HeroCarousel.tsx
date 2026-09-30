@@ -137,6 +137,7 @@ export function HeroCarousel({
                 headingLevel={i === 0 && firstIsH1 ? 1 : 2}
                 eager={i === 0}
                 inactive={!active}
+                collageOffset={i}
               />
             </div>
           );
@@ -146,7 +147,7 @@ export function HeroCarousel({
       <button
         type="button"
         onClick={() => go(index - 1)}
-        className="absolute left-3 top-1/2 z-[2] hidden h-11 w-11 -translate-y-[calc(50%+1.25rem)] place-items-center rounded-pill bg-surface/90 text-ink shadow-[var(--shadow-lift)] transition hover:bg-surface md:grid"
+        className="absolute left-3 top-1/2 z-[2] hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-pill bg-surface/95 text-ink shadow-[var(--shadow-lift)] ring-1 ring-black/10 transition hover:bg-surface md:grid xl:left-6"
         aria-label={t.heroPrev}
       >
         <ChevronLeft className="h-5 w-5" aria-hidden />
@@ -154,21 +155,24 @@ export function HeroCarousel({
       <button
         type="button"
         onClick={() => go(index + 1)}
-        className="absolute right-3 top-1/2 z-[2] hidden h-11 w-11 -translate-y-[calc(50%+1.25rem)] place-items-center rounded-pill bg-surface/90 text-ink shadow-[var(--shadow-lift)] transition hover:bg-surface md:grid"
+        className="absolute right-3 top-1/2 z-[2] hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-pill bg-surface/95 text-ink shadow-[var(--shadow-lift)] ring-1 ring-black/10 transition hover:bg-surface md:grid xl:right-6"
         aria-label={t.heroNext}
       >
         <ChevronRight className="h-5 w-5" aria-hidden />
       </button>
 
-      <div className="mt-2 flex items-center justify-center gap-0.5">
+      {/* GymBeam-style dots over the banner's bottom edge (white discs, the current one orange). */}
+      <div className="absolute inset-x-0 bottom-1.5 z-[2] flex items-center justify-center gap-0.5 md:bottom-3">
         {autoplaySeconds > 0 && !reduced ? (
           <button
             type="button"
             onClick={() => setStopped((v) => !v)}
-            className="grid h-10 w-10 place-items-center rounded-pill text-muted hover:bg-surface hover:text-ink"
+            className="group grid h-10 w-10 place-items-center"
             aria-label={stopped ? t.heroPlay : t.heroPause}
           >
-            {stopped ? <Play className="h-4 w-4" aria-hidden /> : <Pause className="h-4 w-4" aria-hidden />}
+            <span className="grid h-7 w-7 place-items-center rounded-pill bg-surface text-ink shadow-sm ring-1 ring-black/15 group-hover:bg-canvas">
+              {stopped ? <Play className="h-3.5 w-3.5" aria-hidden /> : <Pause className="h-3.5 w-3.5" aria-hidden />}
+            </span>
           </button>
         ) : null}
         {slides.map((s, i) => (
@@ -178,9 +182,14 @@ export function HeroCarousel({
             onClick={() => go(i)}
             aria-label={fmt(t.heroGoTo, { n: i + 1 })}
             aria-current={i === index ? "true" : undefined}
-            className="group grid h-10 min-w-10 place-items-center px-1"
+            className="group grid h-10 w-10 place-items-center"
           >
-            <span className={clsx("block h-2.5 rounded-pill transition-all", i === index ? "w-8 bg-primary" : "w-2.5 bg-ink/20 group-hover:bg-ink/40")} />
+            <span
+              className={clsx(
+                "block h-3.5 w-3.5 rounded-pill ring-1 transition",
+                i === index ? "bg-accent ring-accent-600" : "bg-surface ring-black/25 group-hover:bg-canvas",
+              )}
+            />
           </button>
         ))}
       </div>

@@ -57,7 +57,7 @@ export default async function ContactsPage({ params }: PageProps<"/[lang]/kontak
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-muted">{label}</p>
                   {href ? (
-                    <a href={href} className="block wrap-break-word text-lg font-bold text-ink hover:text-primary">
+                    <a href={href} className="flex min-h-10 items-center wrap-break-word text-lg font-bold text-ink hover:text-primary">
                       {value}
                     </a>
                   ) : (
@@ -68,7 +68,7 @@ export default async function ContactsPage({ params }: PageProps<"/[lang]/kontak
                       href={mapHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-0.5 inline-flex items-center gap-1 text-sm font-semibold text-primary underline underline-offset-2"
+                      className="inline-flex min-h-10 items-center gap-1 text-sm font-semibold text-primary underline underline-offset-2"
                     >
                       {t.contact.map}
                       <ExternalLink className="h-3.5 w-3.5" aria-hidden />

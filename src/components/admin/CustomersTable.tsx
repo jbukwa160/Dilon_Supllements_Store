@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Ban, Check, Minus } from "lucide-react";
 import type { AdminCustomerRow } from "@/lib/admin/customers";
 import { formatDate, formatDateTime, formatPrice } from "@/lib/format";
+import { ScrollArea } from "@/components/admin/ScrollArea";
 
 // Registered customers (Поръчки → Клиенти): a table from `md`, cards on phones. Server-safe (no hooks).
 
@@ -49,7 +50,7 @@ export function CustomersTable({ customers, empty }: { customers: AdminCustomerR
           </li>
         ))}
       </ul>
-      <div className="hidden overflow-x-auto rounded-3xl border border-line bg-white md:block">
+      <ScrollArea className="rounded-3xl border border-line bg-white" wrapperClassName="hidden md:block">
         <table className="w-full min-w-[860px] text-left text-[0.95rem]">
           <thead className="border-b border-line bg-canvas text-xs font-extrabold uppercase tracking-wide text-muted">
             <tr>
@@ -118,7 +119,7 @@ export function CustomersTable({ customers, empty }: { customers: AdminCustomerR
             ))}
           </tbody>
         </table>
-      </div>
+      </ScrollArea>
     </>
   );
 }

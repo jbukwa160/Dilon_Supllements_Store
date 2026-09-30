@@ -52,7 +52,7 @@ export function Footer({ lang, settings: s, categories }: { lang: Lang; settings
     { href: "/biskvitki", label: t.cookiePolicy },
   ];
   const heading = "font-display text-[0.85rem] font-extrabold uppercase tracking-[0.04em] text-white";
-  const link = "inline-flex min-h-8 items-center hover:text-white hover:underline underline-offset-2";
+  const link = "inline-flex min-h-10 items-center hover:text-white hover:underline underline-offset-2";
 
   return (
     <footer aria-label={t.label} className="on-dark mt-16 bg-ink text-[0.95rem] text-canvas/80">
@@ -152,7 +152,7 @@ export function Footer({ lang, settings: s, categories }: { lang: Lang; settings
               <li className="flex items-start gap-2.5">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden />
                 <span className="sr-only">{t.phone}: </span>
-                <a href={`tel:${s.phone.replace(/[^\d+]/g, "")}`} className="font-semibold text-white hover:underline">
+                <a href={`tel:${s.phone.replace(/[^\d+]/g, "")}`} className="-my-2 inline-flex min-h-10 items-center font-semibold text-white hover:underline">
                   {s.phone}
                 </a>
               </li>
@@ -161,7 +161,7 @@ export function Footer({ lang, settings: s, categories }: { lang: Lang; settings
               <li className="flex items-start gap-2.5">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden />
                 <span className="sr-only">{t.email}: </span>
-                <a href={`mailto:${s.email}`} className="break-all hover:text-white hover:underline">
+                <a href={`mailto:${s.email}`} className="-my-2 inline-flex min-h-10 items-center break-all hover:text-white hover:underline">
                   {s.email}
                 </a>
               </li>

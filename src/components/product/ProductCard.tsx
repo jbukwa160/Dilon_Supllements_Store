@@ -130,7 +130,7 @@ export function ProductCard({ product: p, lang, eager = false }: { product: Card
             <Link
               href={localizeHref(`/marka/${p.brandSlug}`, lang)}
               // py/-my: a ≈ 29 px tall tap target without moving the text (the 11 px line alone is only 17 px).
-              className="relative z-10 -my-1.5 w-fit max-w-full truncate py-1.5 text-[0.7rem] font-bold uppercase tracking-[0.06em] text-muted hover:text-primary"
+              className="relative z-10 -my-3 w-fit max-w-full truncate py-3 text-[0.7rem] font-bold uppercase tracking-[0.06em] text-muted hover:text-primary"
             >
               {p.brand}
             </Link>

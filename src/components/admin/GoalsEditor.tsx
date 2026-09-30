@@ -62,21 +62,21 @@ export function RowControls({
   last: boolean;
 }) {
   return (
-    <div className="flex gap-1.5">
+    <div className="ml-auto flex gap-1.5">
       <button
         type="button"
         onClick={onToggle}
-        className={clsx("grid h-9 w-9 place-items-center rounded-lg border", hidden ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink")}
+        className={clsx("grid h-10 w-10 place-items-center rounded-lg border", hidden ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink")}
         aria-label={hidden ? `Покажи „${name}“` : `Скрий „${name}“`}
         aria-pressed={hidden}
         title={hidden ? "Скрита — натиснете, за да се показва" : "Показва се — натиснете, за да я скриете"}
       >
         {hidden ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
       </button>
-      <button type="button" disabled={first} onClick={onUp} className="grid h-9 w-9 place-items-center rounded-lg border border-line bg-white hover:border-ink disabled:opacity-30" aria-label={`„${name}“ по-нагоре`}>
+      <button type="button" disabled={first} onClick={onUp} className="grid h-10 w-10 place-items-center rounded-lg border border-line bg-white hover:border-ink disabled:opacity-30" aria-label={`„${name}“ по-нагоре`}>
         <ArrowUp className="h-4 w-4" />
       </button>
-      <button type="button" disabled={last} onClick={onDown} className="grid h-9 w-9 place-items-center rounded-lg border border-line bg-white hover:border-ink disabled:opacity-30" aria-label={`„${name}“ по-надолу`}>
+      <button type="button" disabled={last} onClick={onDown} className="grid h-10 w-10 place-items-center rounded-lg border border-line bg-white hover:border-ink disabled:opacity-30" aria-label={`„${name}“ по-надолу`}>
         <ArrowDown className="h-4 w-4" />
       </button>
     </div>
@@ -116,7 +116,7 @@ export function GoalsEditor({
           return (
             <li key={g.slug} className={clsx("rounded-2xl border-2", isOpen ? "border-ink" : "border-line", g.hidden && !isOpen && "bg-canvas")}>
               <div className="flex flex-wrap items-center gap-3 p-3">
-                <button type="button" onClick={() => setOpen(isOpen ? null : g.slug)} className="flex min-w-0 flex-1 items-center gap-3 text-left" aria-expanded={isOpen}>
+                <button type="button" onClick={() => setOpen(isOpen ? null : g.slug)} className="flex min-w-0 flex-1 basis-60 items-center gap-3 text-left" aria-expanded={isOpen}>
                   <span className={clsx("grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-canvas text-ink", g.hidden && "opacity-50")}>
                     <CategoryIcon icon={g.icon} className="h-5 w-5" />
                   </span>

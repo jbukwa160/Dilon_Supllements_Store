@@ -334,7 +334,7 @@ function TierEditor({
       ) : null}
       {open ? (
         <div className="space-y-5 border-t border-line p-4 md:p-5">
-          <div className="grid gap-4 md:grid-cols-[14rem_1fr]">
+          <div className="grid gap-4 md:grid-cols-[14rem_minmax(0,1fr)]">
             <Field label="Поръчка над" hint="Сумата на продуктите в количката (с намаленията, без доставката).">
               <MoneyInput value={tier.threshold} onChange={(v) => set("threshold", v)} invalid={!!error && !(n > 0)} placeholder="40" />
             </Field>

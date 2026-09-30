@@ -124,7 +124,7 @@ export default async function BlogPostPage({ params }: PageProps<"/[lang]/blog/[
       {toc.map((h, i) => (
         <li key={h.id} className="flex gap-2">
           <span className="font-bold tabular-nums text-primary">{i + 1}.</span>
-          <a href={`#${h.id}`} className="font-medium text-ink-soft hover:text-primary hover:underline">
+          <a href={`#${h.id}`} className="inline-flex min-h-10 items-center font-medium text-ink-soft hover:text-primary hover:underline">
             {h.text}
           </a>
         </li>
@@ -141,7 +141,7 @@ export default async function BlogPostPage({ params }: PageProps<"/[lang]/blog/[
           {post.topic && topicHref ? (
             <Link
               href={localizeHref(topicHref, lang)}
-              className="inline-block rounded-pill bg-primary-50 px-3.5 py-1 text-sm font-semibold text-primary-700 transition hover:bg-primary hover:text-white"
+              className="inline-flex min-h-10 items-center rounded-pill bg-primary-50 px-3.5 py-1 text-sm font-semibold text-primary-700 transition hover:bg-primary hover:text-white"
             >
               {post.topic}
             </Link>
@@ -172,7 +172,7 @@ export default async function BlogPostPage({ params }: PageProps<"/[lang]/blog/[
           <div className="min-w-0 max-w-3xl">
             {toc.length > 2 ? (
               <details className="mb-6 rounded-lg border border-line bg-surface p-4 lg:hidden">
-                <summary className="flex cursor-pointer items-center gap-2 font-bold">
+                <summary className="flex min-h-10 cursor-pointer items-center gap-2 font-bold">
                   <ListOrdered className="h-5 w-5 text-primary" aria-hidden /> {t.toc}
                 </summary>
                 <div className="mt-3">{tocList}</div>
@@ -217,7 +217,7 @@ export default async function BlogPostPage({ params }: PageProps<"/[lang]/blog/[
             <h2 id="related-posts" className="h-display text-[1.375rem] md:text-[2rem]">
               {t.related}
             </h2>
-            <Link href={localizeHref("/blog", lang)} className="inline-flex shrink-0 items-center gap-1 font-semibold text-primary hover:underline">
+            <Link href={localizeHref("/blog", lang)} className="inline-flex min-h-10 shrink-0 items-center gap-1 font-semibold text-primary hover:underline">
               {t.allPosts} <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </div>

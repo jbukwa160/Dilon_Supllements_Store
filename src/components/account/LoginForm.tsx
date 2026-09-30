@@ -40,7 +40,7 @@ export function LoginForm({ next }: { next: string }) {
         autoComplete="current-password"
         error={err(f.password)}
         aside={
-          <Link href={forgotHref} className="text-sm font-semibold text-primary hover:underline">
+          <Link href={forgotHref} className="-my-2 inline-flex min-h-10 items-center text-sm font-semibold text-primary hover:underline">
             {t.forgot}
           </Link>
         }
