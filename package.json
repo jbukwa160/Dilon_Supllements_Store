@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "import": "tsx scripts/import-catalog.ts",
     "setup": "npm run import && npm run build",
-    "admin:user": "tsx scripts/admin-user.ts"
+    "admin:user": "tsx scripts/admin-user.ts",
+    "images": "tsx --conditions=react-server scripts/fetch-images.ts"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",

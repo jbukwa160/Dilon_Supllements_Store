@@ -280,9 +280,35 @@ server {
 | --- | --- | --- |
 | `catalog.db` | Products, families, facets, search index, SKU registry — rebuilt by `npm run import` | No |
 | `store.db` | Orders, customers, admin logins, settings, banners, menu, gifts, promotions, price history, **admin product edits**, blog, chat, manufacturers, withdrawals, newsletter, courier cache | **Yes** |
-| `uploads/` | Photos uploaded in the admin | **Yes** |
+| `uploads/` | Photos uploaded in the admin and packshots added by `npm run images` | **Yes** |
+| `image-sources.csv` | Provenance of the packshots added by `npm run images` (SKU → official page + image URL) | **Yes** |
 | `outbox/` | E-mails written instead of sent, `failed/` = queued for retry — contain customer data | Delete when read |
 | `prices.csv` (optional) | Real prices for the importer | Yes, if you use it |
+
+## Product pictures from manufacturers (`npm run images`)
+
+The export has no picture for many products, and the shop hides products without one. `scripts/fetch-images.ts`
+fills the gap with **official manufacturer packshots only**: the brand's own site/shop (Shopify `products.json`,
+sitemaps + JSON-LD, the brand's product API), never other retailers. Sources per brand are in
+`scripts/lib/brand-sources.ts`.
+
+```bash
+npm run images -- --dry-run --brand "BioTech USA"   # try one brand: downloads previews, changes nothing
+npm run images                                      # in-stock products without a picture (+ their family variants)
+npm run images -- --all-stock                       # every product without a picture
+# options: --brand "A,B"  --limit N  --min-score 0.8  --work-dir <dir>  --refresh (ignore the cache)  --no-revalidate
+```
+
+- Matching: EAN/GTIN first (most brand stores publish barcodes), then name + flavour + pack size. Only confident
+  matches are applied; the rest goes to `<work-dir>/review.csv` (candidate pictures in `<work-dir>/review/`).
+  When a brand shows one packshot for all flavours of a product, that picture is used for the whole family.
+- Pictures are checked by content (real JPG/PNG/WEBP, ≥ 250 px, ≤ 5 MB), stored in `data/uploads` like admin uploads
+  and set as admin edits (`saveProductEdits`), so they survive `npm run import`; replace or remove them in the admin.
+- Provenance: `data/image-sources.csv` (SKU, official page, image URL, file, brand, date). Full run report:
+  `<work-dir>/report.csv` (default work dir: the system temp folder `dilon-image-collector`, with an HTTP cache so
+  reruns do not hit the brand sites again).
+- Polite crawling: identifies itself (`DilonImageCollector/1.0`), obeys robots.txt, ≤ 2 requests at a time per site
+  with pauses. The running site is asked to refresh its pages at the end.
 
 ## Storefront notes
 
